@@ -14,7 +14,7 @@
 | :---         |     :---:      |
 | Yi Yang  |1074365| 
 | Claire Zhang   |1080915| 
-| Hengzhi   || 
+| Hengzhi Qiu   |1253748| 
 | Yonghao Hu    |1049814| 
 | Terry    |955797| 
 ## General info
