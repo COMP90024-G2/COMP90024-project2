@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<!-- Navbar -->
+<div class="top">
+    <div class="bar w3-theme top left-align large">
+      <a class="bar-item button right hide-large hover-white large w3-theme-l1" href="javascript:void(0)" onclick="open()"><i class="fa fa-bars"></i></a>
+      <a href="/" class="bar-item button w3-theme-l1">Home</a>
+      <a href="/analysis" class="bar-item button hide-small hover-white">Analysis</a>
+      <a href="/youtube" class="bar-item button hide-small hover-white">Youtube</a>
+      <a href="/about" class="bar-item button hide-small hover-white">About</a>
+    </div>
+  </div>
+  
+  <!-- Sidebar -->
+  <nav class="sidebar bar-block collapse large w3-theme-l5 animate-left" id="mySidebar">
+    <a href="javascript:void(0)" onclick="close()" class="right xlarge padding-large hover-black hide-large" title="Close Menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <h4 class="bar-item"><b>Topics</b></h4>
+    <a class="bar-item button hover-black" href="/">Language Diversity</a>
+    <a class="bar-item button hover-black" href="/health">Health</a>
+    <a class="bar-item button hover-black" href="/income">Income</a>
+  </nav>
+  
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="overlay hide-large" onclick="close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+  
+  <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+  <div class="main" style="margin-left:250px">
+  
+    <div class="row padding-64">
+      <div class="twothird container">
+        <h1 class="text-teal">COMP90024-project2</h1>
+        <h2>MAP</h2> 
+      </div>
+    </div>
+  
+   
+    <footer id="footer">
+      <div class="container w3-theme-l2 padding-32">
+        <h4><a href="/"> Home | </a><a href="/analysis">Analysis | </a><a href="/youtube">Youtube | </a><a href="/about">About </a></h4>
+      </div>
+  
+      <div class="container w3-theme-l1">
+        <p>Powered by 2022 COMP90024 Group2</a></p>
+      </div>
+    </footer>
+  
+  <!-- END MAIN -->
+
+  </div>
+  
+  <script>
+  // Get the Sidebar
+  var mySidebar = document.getElementById("mySidebar");
+  
+  // Get the DIV with overlay effect
+  var overlayBg = document.getElementById("myOverlay");
+  
+  // Toggle between showing and hiding the sidebar, and add overlay effect
+  function open() {
+    if (mySidebar.style.display === 'block') {
+      mySidebar.style.display = 'none';
+      overlayBg.style.display = "none";
+    } else {
+      mySidebar.style.display = 'block';
+      overlayBg.style.display = "block";
+    }
+  }
+  
+  // Close the sidebar with the close button
+  function close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+  }
+  </script>
+
+{% endblock %}

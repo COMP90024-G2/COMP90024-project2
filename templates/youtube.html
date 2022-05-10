@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Navbar -->
+<div class="top">
+    <div class="bar w3-theme top left-align large">
+      <a class="bar-item button right hide-large hover-white large w3-theme-l1" href="javascript:void(0)" onclick="open()"><i class="fa fa-bars"></i></a>
+      <a href="/home" class="bar-item button hide-small hover-white">Home</a>
+      <a href="/analysis" class="bar-item button hide-small hover-white">Analysis</a>
+      <a href="/youtube" class="bar-item button w3-theme-l1">Youtube</a>
+      <a href="/about" class="bar-item button hide-small hover-white">About</a>
+    </div>
+  </div>
+    
+  <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+  <div class="main">
+  
+    <div class="row padding-64">
+        <h1 class="text-teal" style="text-align:center">Demonstration Video</h1>
+        <iframe height="650" class="center" 
+        src="https://www.youtube.com/embed/noAKgXqnqUw?autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    </div>
+  
+    <!-- width="420" height="315" -->
+  
+    <footer id="footer">
+      <div class="container w3-theme-l2 padding-32">
+        <h4><a href="/"> Home | </a> <a href="/analysis"> Analysis | </a> <a href="/youtube"> Youtube | </a> <a href="/about"> About </a></h4>
+      </div>
+  
+      <div class="container w3-theme-l1">
+        <p>Powered by 2022 COMP90024 Group2</a></p>
+      </div>
+    </footer>
+  
+  <!-- END MAIN -->
+  </div>
+  
+  
+
+{% endblock %}

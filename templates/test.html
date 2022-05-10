@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class='map-overlay' id='features'><h2>Other language count</h2><div id='pd'><p>Hover over a district!</p></div></div>
+<!-- Map Legend-->
+<div class='map-overlay' id='legend'>
+  <div class="dropdown">
+    <h6>Weekly personal income</h6>
+    
+    <!-- <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works"><h6>Angry</h6></a>
+      </li>
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works01"><h6>Income</h6></a>
+      </li>
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works03"><h6>Age</h6></a>
+      </li>
+    </ul> -->
+  </div>
+</div>
+
+<!-- Map Display Style -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h2,
+  h3 {
+    margin: 10px;
+    font-size: 1.2em;
+  }
+
+  h3 {
+    font-size: 1em;
+  }
+
+  p {
+    font-size: 0.85em;
+    margin: 10px;
+    text-align: left;
+  }
+
+  /**
+  * Create a position for the map
+  * on the page. */
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /**
+  * Set rules for how the map overlays
+  * (information box and legend) will be displayed
+  * on the page. */
+  .map-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+  }
+
+  #features {
+    top: 40px;
+    height: 100px;
+    margin-top: 20px;
+    width: 250px;
+  }
+
+  #legend {
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 25px;
+    height: 250px;
+    margin-bottom: 40px;
+    width: 130px;
+  }
+
+  .legend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+</style>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        //style: 'mapbox://styles/cassie917/cl2zo14xu000114p79nvthchc', // style URL
+        style: 'mapbox://styles/cassie917/cl30cnhtj000014o3ar2epz1i', // style URL
+        center: [144.946457, -37.840935], // starting position [lng, lat]
+        zoom: 8.5, // starting zoom
+        doubleClickZoom: false,			   
+        pitchWithRotate: false,			  
+        attributionControl: false 
+    });
+
+    map.on('mousemove', (e) => {
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['biglayer']});
+        // Make the cities to be prior to states while selecting.
+        if (zones.length > 0) {
+            // Check whether the relevant data exists or not.
+            if(zones[0].properties.lang_spoken_home_oth_lang_p !== 1) {
+                document.getElementById('pd').innerHTML = '<h3><strong>' + 
+                  zones[0].properties.sa3_name16 + '</strong></h3><p><strong><em>' +
+                  zones[0].properties.lang_spoken_home_oth_lang_p + '</strong></h3><p><strong><em>'
+                  }
+                }
+
+                   
+      
+});
+    // const features = map.queryRenderedFeatures(e.point);
+ 
+    // // Limit the number of properties we're displaying for
+    // // legibility and performance
+    // const displayProperties = [
+    // 'type',
+    // 'properties',
+    // //'id',
+    // //'layer',
+    // // 'source',
+    // //'sourceLayer',
+    // 'feature_code'
+    // ];
+    
+    // const displayFeatures = features.map((feat) => {
+    // const displayFeat = {};
+    // displayProperties.forEach((prop) => {
+    // displayFeat[prop] = feat[prop];
+    // });
+    // return displayFeat;
+    // });
+    
+    // //Write object as string with an indent of two spaces.
+    // document.getElementById('features').innerHTML = JSON.stringify(
+    // displayFeatures,
+    // null,
+    // 2
+    // );
+    // });
+
+    
+
+    // Set up legend color
+    map.on('load', function() {
+        //var layers_unemployment = ['150-299','300-399','400-499','500-649','650-799','800-899'];
+        var layers_income = ['800-899', '650-799', '500-649', '400-499', '300-399', '150-299'];
+
+        var colors_unemployment = ['#F39C12', '#F5B041', '#F8C471', '#FAD7A0', '#FDEBD0', '#FEF5E7'];
+       
+        for (i = 0; i < layers_income.length; i++) {
+            var layer = layers_income[i];
+            var color = colors_unemployment[i];
+            var item = document.createElement('div');
+            var key = document.createElement('span');
+            key.className = 'legend-key';
+            key.style.backgroundColor = color;
+
+            var value = document.createElement('span');
+            value.innerHTML = layer;
+            item.appendChild(key);
+            item.appendChild(value);
+            legend.appendChild(item);
+        }
+    });
+
+
+//     map.on('load', () => {
+// // Add an image to use as a custom marker
+// map.loadImage(
+// 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+// (error, image) => {
+// if (error) throw error;
+// map.addImage('custom-marker', image);
+// // Add a GeoJSON source with 2 points
+// map.addSource('points', {
+// 'type': 'geojson',
+// 'data': {
+// 'type': 'FeatureCollection',
+// 'features': [
+// {
+// // feature for Mapbox DC
+// 'type': 'Feature',
+// 'geometry': {
+// 'type': 'Point',
+// 'coordinates': [
+// 144.246457, -37.20935
+// ]
+// },
+// 'properties': {
+// 'title': 'Mapbox DC'
+// }
+// },
+// {
+// // feature for Mapbox SF
+// 'type': 'Feature',
+// 'geometry': {
+// 'type': 'Point',
+// 'coordinates': [143.946457, -37.640935]
+// },
+// 'properties': {
+// 'title': 'Mapbox SF'
+// }
+// }
+// ]
+// }
+// });
+ 
+// // Add a symbol layer
+// map.addLayer({
+// 'id': 'points',
+// 'type': 'symbol',
+// 'source': 'points',
+// 'layout': {
+// 'icon-image': 'custom-marker',
+// // get the title name from the source's "title" property
+// 'text-field': ['get', 'title'],
+// 'text-font': [
+// 'Open Sans Semibold',
+// 'Arial Unicode MS Bold'
+// ],
+// 'text-offset': [0, 1.25],
+// 'text-anchor': 'top'
+// }
+// });
+// }
+// );
+// });
+
+
+</script>
+
+<!-- JavaScript Libraries -->
+<script src="../static/lib/jquery/jquery.min.js"></script>
+<script src="../static/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/lib/php-mail-form/validate.js"></script>
+<script src="../static/lib/easing/easing.min.js"></script>
+
+<!-- Web Main Javascript File -->
+<script src="../static/js/main.js"></script>
+
+</body>
+</html>
