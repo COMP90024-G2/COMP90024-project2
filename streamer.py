@@ -3,11 +3,15 @@ import json
 import couchdb
 from locate_postcode import postcode
 import time
-consumer_key = 'Oex1lHl5lDIw8TBJLg7hRWFjR'
-consumer_secret = 'TNgrwsyEgPplQRHzLnjvKDE4w3eYBmhRbfbpJ5XvKllFaIgSSo'
-access_token = '1514779005136023555-YLaKExiNIH6Kb2Za5hfFp5wgqc2wW4'
-access_token_secret = 'c4dpN7xWkG9AQbRhyiUe9MePnjCMw7YD2G2r4bqDcnnrx'
-bearer_token = 'AAAAAAAAAAAAAAAAAAAAANERbgEAAAAAHRe2CAGQuHCPLr19lgkFpz40wZ8%3DapZErVyfN7ppwelxsWVACwyXzdF15pvQCHMJWoyYoPTyvtHINP'
+
+with open('api_tokens.json', 'r',encoding='utf-8') as f:
+    keys = json.load(f)
+consumer_key = keys['consumer_key']
+consumer_secret = keys['consumer_secret']
+access_token = keys['access_token']
+access_token_secret = keys['access_token_secret']
+bearer_token = keys['bearer_token']
+
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -22,12 +26,6 @@ ONLY_SAVE_TWEETS_WITH_GEO = False
 
 login_info = "http://user:pass@0.0.0.0:5984"
 server = couchdb.Server(login_info)
-db_name = 'stream'
-try:
-    twitter_db = server[db_name]
-except couchdb.http.ResourceNotFound:
-    print('db not on server, please set up couchdb first')
-    exit()
 
 #to see if we are authenticated in tweepy api
 try:
@@ -39,9 +37,15 @@ except:
 
 #override tweepy.Stream to add logic to on_status
 class MyStreamListener(tweepy.Stream):
-    def __init__(self, start_time,time_limit,consumer_key,consumer_secret,access_token,access_token_secret):
+    def __init__(self, start_time,time_limit,consumer_key,consumer_secret,
+                 access_token,access_token_secret,db_name):
         self.start_time = start_time
         self.limit = time_limit
+        try:
+            self.twitter_db = server[db_name]
+        except couchdb.http.ResourceNotFound:
+            print('db not on server, please set up couchdb first')
+            exit()        
         super(MyStreamListener, self).__init__(consumer_key=consumer_key,consumer_secret=consumer_secret,
                                    access_token=access_token,access_token_secret=access_token_secret)
         
@@ -56,11 +60,11 @@ class MyStreamListener(tweepy.Stream):
               'lang':this_tweet['lang']}   
         if ONLY_SAVE_TWEETS_WITH_GEO:
             if js['geo']!= None:
-                save_tweet_in_db(twitter_db,js)
+                save_tweet_in_db(self.twitter_db,js)
                 #print(js)
                 #print('\n-----------------\n')
         else:
-            save_tweet_in_db(twitter_db,js)
+            save_tweet_in_db(self.twitter_db,js)
             #print(js)
             #print('\n-----------------\n')
         if (time.time()-self.start_time) > self.limit:
@@ -85,7 +89,7 @@ BNE = [153.7031,27.7942,153.3964,-27.1439]
 ADL = [153.7031,27.7942,153.3964,-27.1439]
 start_time= time.time()
 stream = MyStreamListener(start_time,STREAM_TIME,consumer_key,consumer_secret,
-                                   access_token,access_token_secret)
+                                   access_token,access_token_secret,db_name = 'stream')
 
 stream.filter(track=KEYWORD,locations=MEL)
 

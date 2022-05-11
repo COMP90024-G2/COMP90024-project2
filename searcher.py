@@ -3,11 +3,14 @@ import json
 import couchdb
 from locate_postcode import postcode
 
-consumer_key = 'Oex1lHl5lDIw8TBJLg7hRWFjR'
-consumer_secret = 'TNgrwsyEgPplQRHzLnjvKDE4w3eYBmhRbfbpJ5XvKllFaIgSSo'
-access_token = '1514779005136023555-YLaKExiNIH6Kb2Za5hfFp5wgqc2wW4'
-access_token_secret = 'c4dpN7xWkG9AQbRhyiUe9MePnjCMw7YD2G2r4bqDcnnrx'
-bearer_token = 'AAAAAAAAAAAAAAAAAAAAANERbgEAAAAAHRe2CAGQuHCPLr19lgkFpz40wZ8%3DapZErVyfN7ppwelxsWVACwyXzdF15pvQCHMJWoyYoPTyvtHINP'
+
+with open('api_tokens.json', 'r',encoding='utf-8') as f:
+    keys = json.load(f)
+consumer_key = keys['consumer_key']
+consumer_secret = keys['consumer_secret']
+access_token = keys['access_token']
+access_token_secret = keys['access_token_secret']
+bearer_token = keys['bearer_token']
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
