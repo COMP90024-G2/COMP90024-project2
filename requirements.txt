@@ -1,0 +1,7 @@
+tweepy
+mmap
+couchdb
+textblob
+shapely
+nltk
+
