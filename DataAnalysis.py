@@ -77,5 +77,5 @@ def topic_sentiment_analysis(melb_city, employment_keywords, health_keywords):
         text_list = generate_english_text_list(melb_city.districts[district])
         categorized_tweet = simple_tweet_categorization(text_list, "Employment", employment_keywords, "Health", health_keywords)
         melb_city.districts[district].mean_employment_opinion_score = topic_sentiment(categorized_tweet["Employment"])
-        melb_city.districts[district].mean_healthcare_opinion_score = topic_sentiment(categorized_tweet["Employment"])    
+        melb_city.districts[district].mean_healthcare_opinion_score = topic_sentiment(categorized_tweet["Health"])    
         
