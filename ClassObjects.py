@@ -1,3 +1,7 @@
+#****************************
+# 2022 COMP90024 Cluster and Cloud Computing Assignment 2 TEAM 2
+#****************************
+
 #Define Class Objects
 
 class Tweet:

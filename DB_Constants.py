@@ -1,21 +1,28 @@
+#****************************
+# 2022 COMP90024 Cluster and Cloud Computing Assignment 2 TEAM 2
+#****************************
+
 #DB and harvester constants
 
+# Twitter API tokens
 consumer_key = 'Oex1lHl5lDIw8TBJLg7hRWFjR'
 consumer_secret = 'TNgrwsyEgPplQRHzLnjvKDE4w3eYBmhRbfbpJ5XvKllFaIgSSo'
 access_token = '1514779005136023555-YLaKExiNIH6Kb2Za5hfFp5wgqc2wW4'
 access_token_secret = 'c4dpN7xWkG9AQbRhyiUe9MePnjCMw7YD2G2r4bqDcnnrx'
 bearer_token = 'AAAAAAAAAAAAAAAAAAAAANERbgEAAAAAHRe2CAGQuHCPLr19lgkFpz40wZ8%3DapZErVyfN7ppwelxsWVACwyXzdF15pvQCHMJWoyYoPTyvtHINP'
 
+# couchDB url
 login_info = "http://admin:admin@172.26.130.73:5984"
 
+# if we want streamer/searcher to save tweets with coordinates only
 ONLY_SAVE_TWEETS_WITH_GEO = False
-
+# the streaming time for streamer
 STREAM_TIME = 60
-
+# define the keywords for topic 'EMPLOYMENT'
 EMPLOYMENT = ["employment","job", "occupation", "income", "pay"]
-
+# define the keywords for topic 'HEALTH'
 HEALTH = ["health", "hospital","sick","unwell","doctor", "medicine", "drug"]
-
+# the 3 topics we want to investigate in this project
 TOPICS = [['diversity'], EMPLOYMENT, HEALTH]
 
 # bounding box for Australia and major cities in AU
