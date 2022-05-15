@@ -1,21 +1,25 @@
-# COMP90024- project2
+virtualenv flask
+cd flask
+source bin/activate
+pip install flask
+cd -
+python run.py
 
-**Melbourne the Most Liveable City?**
+Another method
+pip install virtualenv
+virtualenv env2  # create a new env
+pip install flask
+cd -
+python run.py
 
-## Table of contents
-* [Team Members](#team-members)
-* [General Info](#general-info)
-* ...
 
+<!-- couchdb -->
+sudo chown -R $(whoami) /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share <!-- might need this -->
 
-## Team Members
+npm install -g couchimport
 
-| Name | Student ID|
-| :---         |     :---:      |
-| Yi Yang  |1074365| 
-| Claire Zhang   |1080915| 
-| Hengzhi Qiu   |1253748| 
-| Yonghao Hu    |1049814| 
-| Terry    |955797| 
-## General info
-This is project is about harvest tweets from Melbourne on the MRC and undertake a variety of social media data analytics scenarios that explore liveability of Melbourne and importantly how the Twitter data can be used compared with the data available within the AURIN platform to improve our knowledge of the liveability of Melbourne.
+curl -u admin:admin -X GET http://172.26.130.73:5984/employment/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/employment.json
+
+curl -u admin:admin -X GET http://172.26.130.73:5984/health/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/health.json
+
+curl -u admin:admin -X GET http://172.26.130.73:5984/diversity/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/diversity.json

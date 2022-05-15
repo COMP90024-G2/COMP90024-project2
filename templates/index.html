@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- JavaScript Libraries -->
+<script src="../static/lib/jquery/jquery.min.js"></script>
+<script src="../static/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/lib/php-mail-form/validate.js"></script>
+<script src="../static/lib/easing/easing.min.js"></script>
+
+<!-- Web Main Javascript File -->
+<script src="../static/js/main.js"></script>
+
+<!-- Map Display Style -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h2,
+  h3 {
+    margin: 10px;
+    font-size: 1em;
+  }
+
+  p {
+    font-size: 0.85em;
+    margin: 10px;
+    text-align: left;
+  }
+
+  /**
+  * Create a position for the map
+  * on the page. */
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /**
+  * Set rules for how the map overlays
+  * (information box and legend) will be displayed
+  * on the page. */
+  .map-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin-right: 20px;
+    font-family: Nunito, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+  }
+
+  #features {
+    top: 40px;
+    height: 280px;
+    margin-top: 20px;
+    width: 250px;
+  }
+
+  #legend {
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 25px;
+    height: 220px;
+    margin-bottom: 40px;
+    width: 130px;
+  }
+
+  .legend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+</style>
+
+
+<!-- Navbar -->
+<div class="top">
+    <div class="bar theme-nav top left-align large">
+      <a class="bar-item button right hide-large hover-w large theme-btn" href="javascript:void(0)" onclick="open()"><i class="fa fa-bars"></i></a>
+      <a href="/" class="bar-item button theme-btn">Home</a>
+      <a href="/analysis" class="bar-item button hide-small hover-w">Analysis</a>
+      <a href="/youtube" class="bar-item button hide-small hover-w">Youtube</a>
+      <a href="/about" class="bar-item button hide-small hover-w">About</a>
+    </div>
+  </div>
+  
+  <!-- Sidebar -->
+  <nav class="sidebar bar-block collapse large theme-side animate-left" id="mySidebar">
+    <a href="javascript:void(0)" onclick="close()" class="right xlarge padding-large hover-b hide-large" title="Close Menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <h4 class="bar-item"><b>Topics</b></h4>
+    <a class="bar-item button hover-b" href="/income">Income</a>
+    <a class="bar-item button hover-b" href="/health">Health</a>
+    <a class="bar-item button hover-b" href="/language">Language Diversity</a>
+    <a class="bar-item button hover-b" href="/sentiment">Sentiment Analysis</a>
+  </nav>
+  <!-- sidebar on small screens -->
+  <div class="overlay hide-large" onclick="close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+  
+  <!-- Main -->
+  <div class="main" style="margin-left:230px">
+  
+    <div class="row padding-64">
+      <div class="twothird container">
+        <!-- <h1>COMP90024-project2</h1> -->
+        <div id="map"></div>
+        <div class='map-overlay' id='features'><h2>Weekly personal income($)</h2><div id='pd'><p>Hover over a district!</p></div></div>
+        <!-- Map Legend-->
+        <div class='map-overlay' id='legend'>
+          <div class="dropdown">
+            <h7>Twitter Positivity Attitude Towards Employment</h7>
+            
+            <!-- <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="works"><h6>Angry</h6></a>
+              </li>
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="works01"><h6>Income</h6></a>
+              </li>
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="works03"><h6>Age</h6></a>
+              </li>
+            </ul> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  
+    <!-- Footer -->
+    <!-- <footer id="footer">
+      <div class="container theme-footer padding-32">
+        <h4><a href="/"> Home | </a><a href="/analysis">Analysis | </a><a href="/youtube">Youtube | </a><a href="/about">About </a></h4>
+      </div>
+  
+      <div class="container theme-btn">
+        <p>Powered by 2022 COMP90024 Group2</a></p>
+      </div>
+    </footer> -->
+  
+  <!-- END MAIN -->
+
+  </div>
+  
+  <script>
+  // map script
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/cassie917/cl35suqu5006514qq749a7bb7', // style URL
+        center: [145.2, -37.78], // starting position [lng, lat][144.946457, -37.840935]
+        zoom: 9, // starting zoom
+        doubleClickZoom: false,			   
+        pitchWithRotate: false,			  
+        attributionControl: false 
+    });
+
+    const zoomThreshold = 10.5;
+    map.on('zoom', function() {
+        if (map.getZoom() > zoomThreshold) {
+            map.setLayoutProperty('cities_unemployment', 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty('cities_unemployment', 'visibility', 'none');
+            map.setLayoutProperty('states_unemployment', 'visibility', 'visible');
+        }
+    });
+
+    // Set up legend color
+    map.on('load', function() {
+        var layers_unemployment = ['-1 ~ -0.5', '-0.5 ~ 0', '0 ~ 0.5', '> 0.5'];
+
+        var colors_unemployment = ['#e8baf8', '#d672f8', '#b416e9', '#601679'];
+       
+        for (i = 0; i < layers_unemployment.length; i++) {
+            var layer = layers_unemployment[i];
+            var color = colors_unemployment[i];
+            var item = document.createElement('div');
+            var key = document.createElement('span');
+            key.className = 'legend-key';
+            key.style.backgroundColor = color;
+
+            var value = document.createElement('span');
+            value.innerHTML = layer;
+            item.appendChild(key);
+            item.appendChild(value);
+            legend.appendChild(item);
+        }
+    });
+
+    // When move mouse onto a region, show the information on the information board.
+    map.on('mousemove', (e) => {
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['income']});
+
+        // Make the cities to be prior to states while selecting.
+        if (zones.length > 0) {
+          document.getElementById('pd').innerHTML = '<h3><strong>' + 
+            zones[0].properties.sa3name + '</strong></h3><p><strong><em>' +
+            "1~149: " + JSON.parse(zones[0].properties.aurin_income).p_1_149_tot  + '</strong></h3><p><strong><em>' + 
+            "150~299: " + JSON.parse(zones[0].properties.aurin_income).p_150_299_tot  + '</strong></h3><p><strong><em>' + 
+            "300~399: " + JSON.parse(zones[0].properties.aurin_income).p_300_399_tot  + '</strong></h3><p><strong><em>' + 
+            "400~499: " + JSON.parse(zones[0].properties.aurin_income).p_400_499_tot  + '</strong></h3><p><strong><em>' + 
+            "500~649: " + JSON.parse(zones[0].properties.aurin_income).p_500_649_tot  + '</strong></h3><p><strong><em>' + 
+            "650~799: " + JSON.parse(zones[0].properties.aurin_income).p_650_799_tot  + '</strong></h3><p><strong><em>' + 
+            "800~900: " + JSON.parse(zones[0].properties.aurin_income).p_800_999_tot  + '</strong></h3><p><strong><em>' 
+        }
+    });
+
+    map.getCanvas().style.cursor = 'default';
+
+  // Other scripts
+  // Get the Sidebar
+  var mySidebar = document.getElementById("mySidebar");
+  
+  // Get the DIV with overlay effect
+  var overlayBg = document.getElementById("myOverlay");
+  
+  // Toggle between showing and hiding the sidebar, and add overlay effect
+  function open() {
+    if (mySidebar.style.display === 'block') {
+      mySidebar.style.display = 'none';
+      overlayBg.style.display = "none";
+    } else {
+      mySidebar.style.display = 'block';
+      overlayBg.style.display = "block";
+    }
+  }
+  
+  // Close the sidebar
+  function close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+  }
+  </script>
+
+{% endblock %}
