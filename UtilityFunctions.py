@@ -121,17 +121,7 @@ def condense_output(melb_city):
         temp["geometry"]["type"] = melb_city.districts[district].shape
         temp["geometry"]["coordinates"] = melb_city.districts[district].coords
         temp["properties"]["tweet_count"] = melb_city.districts[district].tweet_count
-        en_count = 0
-        total = 0
-        for language in melb_city.districts[district].languages:
-            total += melb_city.districts[district].languages[language]
-            if language == "en":
-                en_count = melb_city.districts[district].languages[language]
-        try:
-            temp["properties"]["proportion_non_english_tweets"] = 1 - en_count/total
-        except Exception:
-            temp["properties"]["proportion_non_english_tweets"] = 0
-            continue
+
         temp["properties"]["general_emotion"] = melb_city.districts[district].mean_emotion_score
         temp["properties"]["positive_tweets_percent"] = melb_city.districts[district].positive_tweet_percentage
         temp["properties"]["neutral_tweets_percent"] = melb_city.districts[district].neutral_tweet_percentage
@@ -142,6 +132,20 @@ def condense_output(melb_city):
         temp["properties"]["aurin_language"] = melb_city.districts[district].aurin_lang
         temp["properties"]["aurin_income"] = melb_city.districts[district].aurin_income
         temp["properties"]["aurin_health"] = melb_city.districts[district].aurin_health
+
+        en_count = 0
+        total = 0
+        for language in melb_city.districts[district].languages:
+            total += melb_city.districts[district].languages[language]
+            if language == "en":
+                en_count = melb_city.districts[district].languages[language]
+                
+        try:
+            temp["properties"]["proportion_non_english_tweets"] = 1 - en_count/total
+        except Exception:
+            temp["properties"]["proportion_non_english_tweets"] = 0
+            output["features"].append(temp)
+            continue
 
         output["features"].append(temp)
 
