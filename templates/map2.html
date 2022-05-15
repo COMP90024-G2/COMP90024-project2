@@ -123,7 +123,7 @@
         <!-- Map Legend-->
         <div class='map-overlay' id='legend'>
           <div class="dropdown">
-            <h6>Twitter about Health(including Covid-19)</h6>
+            <h6>Twitter Attitude Relating to Health</h6>
             
             <!-- <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
               <li role="presentation">
@@ -151,9 +151,9 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/cassie917/cl353kzh6000a15o3an5fu7p8', // style URL
-        center: [145.2, -37.78], // starting position [lng, lat]
-        zoom: 9, // starting zoom
+        style: 'mapbox://styles/cassie917/cl37kb9aa000314kzbeodocvn', // style URL
+        center: [145.3, -37.78], // starting position [lng, lat]
+        zoom: 8.6, // starting zoom
         doubleClickZoom: false,			   
         pitchWithRotate: false,			  
         attributionControl: false 
@@ -171,7 +171,7 @@
 
     // Set up legend color
     map.on('load', function() {
-        var layers_unemployment = ['-1 ~ -0.5', '-0.5 ~ 0', '0 ~ 0.5', '> 0.5'];
+        var layers_unemployment = ['< -0.5',  '-0.5 ~ -0.1', '-0.1 ~ 0.15', '> 0.15'];
 
         var colors_unemployment = ['#fbcbcb', '#ef8585', '#f22c2c', '#8d1616'];
        
@@ -193,7 +193,7 @@
 
     // When move mouse onto a region, show the information on the information board.
     map.on('mousemove', (e) => {
-      var zones = map.queryRenderedFeatures(e.point, {layers: ['big_layer']});
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['health_30w']});
       
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {

@@ -14,12 +14,4 @@ python run.py
 
 
 <!-- couchdb -->
-sudo chown -R $(whoami) /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share <!-- might need this -->
-
-npm install -g couchimport
-
-curl -u admin:admin -X GET http://172.26.130.73:5984/employment/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/employment.json
-
-curl -u admin:admin -X GET http://172.26.130.73:5984/health/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/health.json
-
-curl -u admin:admin -X GET http://172.26.130.73:5984/diversity/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/CCC/app_couchdb/data/diversity.json
+curl -u admin:admin -X GET http://172.26.130.73:5984/output/_all_docs\?include_docs\=true > /Users/clairezhang/Documents/2022S1/COMP90024-project2/data/output.json

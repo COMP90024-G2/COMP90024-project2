@@ -56,7 +56,7 @@
 
   #features {
     top: 40px;
-    height: 190px;
+    height: 170px;
     margin-top: 20px;
     width: 270px;
   }
@@ -65,7 +65,7 @@
     padding: 10px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     line-height: 25px;
-    height: 190px;
+    height: 170px;
     margin-bottom: 40px;
     width: 130px;
   }
@@ -116,7 +116,7 @@
         <!-- Map Legend-->
         <div class='map-overlay' id='legend'>
           <div class="dropdown">
-            <h7>Rate of Positive Twitters</h7>
+            <h7>General Emotion of Tweets</h7>
           </div>
         </div>
 
@@ -132,7 +132,7 @@
   mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/cassie917/cl35vq836000014pkz1ylirhg', // style URL
+        style: 'mapbox://styles/cassie917/cl36wqjkq000h14l84f7tvvfb', // style URL
         center: [145.3, -37.78], // starting position [lng, lat]
         zoom: 8.6, // starting zoom
         doubleClickZoom: false,			   
@@ -152,7 +152,7 @@
 
     // Set up legend color
     map.on('load', function() {
-        var layers_unemployment = ['-1 ~ -0.5', '-0.5 ~ 0', '0 ~ 0.5', '> 0.5'];
+        var layers_unemployment = ['0 ~ 0.05', '0.05 ~ 0.1', '0.1 ~ 0.15', '> 0.15'];
 
         var colors_unemployment = ['#f2bb97', '#e7b373', '#c35413', '#5b3115'];
        
@@ -174,16 +174,16 @@
 
     // When move mouse onto a region, show the information on the information board.
     map.on('mousemove', (e) => {
-      var zones = map.queryRenderedFeatures(e.point, {layers: ['emotion']});
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['emo_30w']});
       
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {
           document.getElementById('pd').innerHTML = '<h3><strong>' + 
             zones[0].properties.sa3name + '</strong></h3><p><strong><em>' +
-            'Positive Twitter(%): '+ zones[0].properties.positive_tweets_percent*100  + '</strong></h3><p><strong><em>'+
-            'Netural Twitter(%): ' + zones[0].properties.neutral_tweets_percent*100  + '</strong></h3><p><strong><em>'+
-            'Negative Twitter(%): ' + zones[0].properties.negative_tweets_percent*100  + '</strong></h3><p><strong><em>'
-        }
+            'Positive Twitter: '+ (zones[0].properties.positive_tweets_percent*100).toFixed(2)  + '%</strong></h3><p><strong><em>'+
+            'Netural Twitter: ' + (zones[0].properties.neutral_tweets_percent*100).toFixed(2)  + '%</strong></h3><p><strong><em>'+
+            'Negative Twitter: ' + (zones[0].properties.negative_tweets_percent*100).toFixed(2)  + '%</strong></h3><p><strong><em>'
+        }x
     });
     
     map.getCanvas().style.cursor = 'default';
