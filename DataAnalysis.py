@@ -3,7 +3,12 @@
 from UtilityFunctions import *
 from ClassObjects import *
 from textblob import TextBlob
+import nltk
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
+nltk.download('punkt')
+from nltk import word_tokenize
+import string
 
 def count_languages(melb_city):
     for district in melb_city.districts:
@@ -48,6 +53,14 @@ def topic_sentiment(topic_text_list):
 
         return  sum_score/len(topic_text_list)
 
+def tokenize_text(text):    
+    #Assigning the stop words for preprocessing 
+    #Add punctuations as a part of stop words
+    stop_words = stopwords.words('english')
+    stop_words += list(string.punctuation)
+    tokens = word_tokenize(text)
+    tokens_stopwords_none = [t.lower() for t in tokens if t.lower() not in stop_words]
+    return tokens_stopwords_none
 
 def lemmatize_text(text):
     lemmatizer = WordNetLemmatizer()
@@ -60,22 +73,27 @@ def simple_tweet_categorization(text_list, topic1, topic1_words, topic2, topic2w
     topic1_txt = []
     topic2_txt = []
     for txt in text_list:
-        temp = lemmatize_text(txt)
+        temp = lemmatize_text(tokenize_text(txt))
         for word in topic1_words:
             if word in temp:
                 if txt not in topic1_txt:
                     topic1_txt.append(txt)
+                    #print("Added 1 employment-related tweet")
         for word in topic2words:
             if word in temp:
                 if txt not in topic2_txt:
                     topic2_txt.append(txt)
+                    #print("Added 1 health-related tweet")
     return {topic1: topic1_txt, topic2: topic2_txt}
 
 def topic_sentiment_analysis(melb_city, employment_keywords, health_keywords):
     employment_keywords = employment_keywords + load_txt("business.txt")
+    #print("Categorizing employment under the standards of", employment_keywords)
+    #print("Categorizing health under the standards of", health_keywords)
     for district in melb_city.districts:
         text_list = generate_english_text_list(melb_city.districts[district])
         categorized_tweet = simple_tweet_categorization(text_list, "Employment", employment_keywords, "Health", health_keywords)
         melb_city.districts[district].mean_employment_opinion_score = topic_sentiment(categorized_tweet["Employment"])
+        #print("Health attitude:", topic_sentiment(categorized_tweet["Health"]))
         melb_city.districts[district].mean_healthcare_opinion_score = topic_sentiment(categorized_tweet["Health"])    
         
