@@ -41,8 +41,8 @@ http://172.26.129.178
 ## Video
 https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
 
-## report
-- [report](./docs/Report.pdf)
+## Report
+- [Report](./report/CCC Report.pdf)
 
 ## Repository Structure
 ```
@@ -54,7 +54,7 @@ https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
       - twitter crawler, including searcher and streamer
   /web application
       - web application for visualization
-  /docs 
+  /report 
       - documentations
   .gitignore 
       - config file, ignored file list when git push
