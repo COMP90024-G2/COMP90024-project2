@@ -24,25 +24,14 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Document</title>
             <style>
-
-                /* div {
-                    width: 500px;
-                    height: 300px;
-                } */
          
               img {
-                  width: 100%;
-                  height: 100%;
+                  width: 60%;
+                  height: 60%;
                   padding-left: 100px;
                   padding-right: 100px;
-              
+                  margin-left: 280px;
               }
-              /* .pret {
-                font-size: medium;
-                display: inline-block;
-                padding-right: 10px;
-                
-              } */
               .next {
                 margin-right: 70px;
 
@@ -74,15 +63,11 @@
 
           </body>
           <script>
-            //图片地址数组。我用的网络图。你可以自行替换
-            // let imgArr = ["https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ffile03.16sucai.com%2F2016%2F10%2F1100%2F16sucai_p20161004049_098.JPG&refer=http%3A%2F%2Ffile03.16sucai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627526069&t=254d86f033e2279617c40b2035e57849",
-            //     "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.soutu123.com%2Felement_origin_min_pic%2F16%2F10%2F09%2F0257f936320f509.jpg%21%2Ffw%2F700%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue&refer=http%3A%2F%2Fpic.soutu123.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627526146&t=d429d67bd3e56f8f7ff772debe79aff6"
-            // ]
             let imgArr =["../static/image/1.png", "../static/image/2.png", "../static/image/3.png", "../static/image/4.png", "../static/image/5.png"]
-            let img = document.getElementById("img"); //img标签
-            let pret = document.getElementById("pret"); //上一个按钮dom
-            let next = document.getElementById("next"); //下一个按钮dom
-            let text = document.getElementById("text"); //文字显示
+            let img = document.getElementById("img"); 
+            let pret = document.getElementById("pret"); 
+            let next = document.getElementById("next"); 
+            let text = document.getElementById("text"); 
             var i = 0;
             defaultImg(imgArr, img, i, text);
             next.addEventListener("click", () => {
@@ -91,26 +76,22 @@
             pret.addEventListener("click", () => {
                 prextFn(imgArr, img)
             })
-            function defaultImg(arr, img, index, text) { //默认的图片  arr-图片数组 。img是图片dom，index-是下标 text-是文字标签dom
+            function defaultImg(arr, img, index, text) { 
                 img.src = arr[index];
             }
             function prextFn(arr) { //prev pic
                 if (i == 0) {
                     i = arr.length - 1;
-                    img.src = arr[arr.length - 1];//加上这个就是到了第一张，再次点击就回到最后一张，不想要可以注释
-                    //text.innerText = `一共是${arr.length}张，当前是第${i + 1}张`
-                    // alert("已经是第一张了，在点击就会回到最后一张"); //如果不想这样可以把这三行注释掉
+                    img.src = arr[arr.length - 1];
                     return
                 }
                 i--;
                 img.src = imgArr[i];
             }
-            function nextFn(arr) { //下一张
+            function nextFn(arr) { 
                 if (i == arr.length - 1) {
                     i = 0;
-                    img.src = arr[0]; //加上这个就是到了最后一张，再次点击就回到第一张，不想要可以注释
-                    // text.innerText = `一共是${arr.length}张，当前是第${i + 1}张`
-                    // alert("已经是最后一张了，在点击就会回到第一张"); //如果不想这样可以把这三行注释掉
+                    img.src = arr[0];     
                     return
                 }
                 i++;
