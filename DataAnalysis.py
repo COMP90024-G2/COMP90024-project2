@@ -10,11 +10,13 @@ nltk.download('punkt')
 from nltk import word_tokenize
 import string
 
+# Count the number and categories of languages within a specific area
 def count_languages(melb_city):
     for district in melb_city.districts:
+        print("Counting languages for district", district ,"with number of tweets:", len(melb_city.districts[district].tweet_list))
         melb_city.districts[district].count_languages(melb_city.districts[district].tweet_list)
 
-
+# Analyse the polarity of texted tweets, -1 representing the most negative emotion and 1 representing the positive emotion
 def general_sentiment_analysis(melb_city):
     for district in melb_city.districts:
 
@@ -44,6 +46,7 @@ def general_sentiment_analysis(melb_city):
         else:
             melb_city.districts[district].mean_emotion_score = 0
 
+# Analyse the emotion with the same method, but under a specifc topic
 def topic_sentiment(topic_text_list):
     sum_score = 0
 
@@ -53,6 +56,7 @@ def topic_sentiment(topic_text_list):
 
         return  sum_score/len(topic_text_list)
 
+# Separate sentences into a list of words
 def tokenize_text(text):    
     #Assigning the stop words for preprocessing 
     #Add punctuations as a part of stop words
@@ -62,6 +66,7 @@ def tokenize_text(text):
     tokens_stopwords_none = [t.lower() for t in tokens if t.lower() not in stop_words]
     return tokens_stopwords_none
 
+# Lemmatize the given words
 def lemmatize_text(text):
     lemmatizer = WordNetLemmatizer()
     lemmatized=[]
@@ -69,6 +74,7 @@ def lemmatize_text(text):
         lemmatized.append(lemmatizer.lemmatize(word))
     return lemmatized
 
+# Categorize given tweets based on a list of key words, mainly used for the large melbourne file provided
 def simple_tweet_categorization(text_list, topic1, topic1_words, topic2, topic2words):
     topic1_txt = []
     topic2_txt = []
@@ -86,6 +92,7 @@ def simple_tweet_categorization(text_list, topic1, topic1_words, topic2, topic2w
                     #print("Added 1 health-related tweet")
     return {topic1: topic1_txt, topic2: topic2_txt}
 
+# Analyse the sentiments for interested topics 
 def topic_sentiment_analysis(melb_city, employment_keywords, health_keywords):
     employment_keywords = employment_keywords + load_txt("business.txt")
     #print("Categorizing employment under the standards of", employment_keywords)

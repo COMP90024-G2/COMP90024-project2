@@ -13,6 +13,7 @@ import nltk
 #nltk.download('omw-1.4')
 from nltk.corpus import wordnet
 
+# Initialize the Sa3 Districts with their Geolocation boundaries
 def initialize_melb_area(geofile):
     melb = City() 
     with open(geofile,'r') as f:
@@ -21,7 +22,9 @@ def initialize_melb_area(geofile):
             melb.add_district(District(geoinfo['features'][i]))
     return melb
 
+# Locates a given tweet to a specific Sa3 District
 def locate_tweet_to_Area(tweet, melb):
+    #print("Checking Point 1 with tweet from", tweet.coords)
     try:
         tweet_coor = tweet.coords
         loc = Point([tweet_coor[1],tweet_coor[0]])
@@ -29,15 +32,47 @@ def locate_tweet_to_Area(tweet, melb):
             if melb.districts[district].shape == 'Polygon':
                 container_box = Polygon(melb.districts[district].coords[0])
                 if container_box.contains(loc):
+                    #print("Length before adding:", len(melb.districts[district].tweet_list))
                     melb.districts[district].add_tweet(tweet)
+                    #print("Length After adding:", len(melb.districts[district].tweet_list))
+                    #print("1 tweet added to district:", district)
             elif melb.districts[district].shape == 'MultiPolygon':
                 for polygon in melb.districts[district].coords:
                     container_box = Polygon(polygon[0])
                     if container_box.contains(loc):
+                        #print("Length before adding:", len(melb.districts[district].tweet_list))
                         melb.districts[district].add_tweet(tweet)
-    except Exception:
+                        #print("Length After adding:", len(melb.districts[district].tweet_list))
+                        #print("1 tweet added to district:", district)
+    except Exception as e:
         return
 
+# Locates a given tweet to a specific Sa3 District (This function corresponds to the change in format from DB)
+def locate_tweet_to_Area_DB(tweet, melb):
+    #print("Checking Point 1 with tweet from", tweet.coords)
+    try:
+        tweet_coor = tweet.coords["coordinates"]
+        loc = Point([tweet_coor[1],tweet_coor[0]])
+        for district in melb.districts:
+            if melb.districts[district].shape == 'Polygon':
+                container_box = Polygon(melb.districts[district].coords[0])
+                if container_box.contains(loc):
+                    #print("Length before adding:", len(melb.districts[district].tweet_list))
+                    melb.districts[district].add_tweet(tweet)
+                    #print("Length After adding:", len(melb.districts[district].tweet_list))
+                    #print("1 tweet added to district:", district)
+            elif melb.districts[district].shape == 'MultiPolygon':
+                for polygon in melb.districts[district].coords:
+                    container_box = Polygon(polygon[0])
+                    if container_box.contains(loc):
+                        #print("Length before adding:", len(melb.districts[district].tweet_list))
+                        melb.districts[district].add_tweet(tweet)
+                        #print("Length After adding:", len(melb.districts[district].tweet_list))
+                        #print("1 tweet added to district:", district)
+    except Exception as e:
+        return
+
+# Simple Function to read a txt file
 def load_txt(file_name):
     list_word=[]
     try:
@@ -58,7 +93,7 @@ def load_txt(file_name):
         print(e)
     return list_word
 
-
+# Contenates All the texts in English into 1 list
 def generate_english_text_list(district):
     txt_lst = []
     for tweet in district.tweet_list:
@@ -66,14 +101,17 @@ def generate_english_text_list(district):
             txt_lst.append(txt_preprocess(tweet.text))
     return txt_lst  
 
+# Removes Punctuations from a given text
 def remove_punctuations(text):
     text = text.translate(str.maketrans('', '',string.punctuation))
     return text
 
+# Removes Punctuations as well as URL links
 def txt_preprocess(text):
 	text = re.sub(r'https?:\/\/\S*', '', text, flags=re.MULTILINE)
 	return remove_punctuations(text)
 
+# Gets Synonyms for a given phrase
 def synonym_extractor(phrase):
     synonyms = []
     for syn in wordnet.synsets(phrase):
@@ -85,6 +123,7 @@ def synonym_extractor(phrase):
                     continue
     return synonyms
 
+# Gets Antynoms for a given phrase
 def antonym_extractor(phrase):
     antonym = []
     for syn in wordnet.synsets(phrase):
@@ -96,6 +135,7 @@ def antonym_extractor(phrase):
                     continue
     return antonym
 
+# For a given list of root key words, expand the list by adding Antynoms and synonyms
 def generate_keywords(root_words):
     keyword_list = []
     for word in root_words:
@@ -109,7 +149,7 @@ def generate_keywords(root_words):
                 keyword_list.append(syn)
     return keyword_list
 
-
+# Prepare the result to be uploaded to DB
 def condense_output(melb_city):
 
     output = {"features":[]}

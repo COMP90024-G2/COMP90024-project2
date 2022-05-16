@@ -29,8 +29,7 @@ def extract_aurin_health(melb, aurin):
         info = {"all_patients_avg_medicare_bfts_expenditure_patient": item['properties']['all_patients_avg_medicare_bfts_expenditure_patient'],
             "all_patients_avg_oop_cst_patient": item['properties']['all_patients_avg_oop_cst_patient'],
             "all_patients_avg_no_patient": item['properties']['all_patients_avg_no_patient'],
-            "perc_patients_csts": item['properties']['perc_patients_csts']
-            }
+            "perc_patients_csts": item['properties']['perc_patients_csts']}
         for district in melb.districts:
             if district == sa3code:
                 melb.districts[district].aurin_health = info 
