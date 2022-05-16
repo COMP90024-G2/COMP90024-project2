@@ -36,7 +36,7 @@ This is an investigation conducted on Twitter social media platform about the li
 </table>
 
 ## Demo
-https://172.26.129.178
+http://172.26.129.178
 
 ## Video
 https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
