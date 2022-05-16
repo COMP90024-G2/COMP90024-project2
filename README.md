@@ -9,7 +9,8 @@ COMP90024 - Cluster and Cloud Computing - 2022 S1 - Project 2
 ## Table of contents
 * [Project Description](#project-description)
 * [Team members](#team-members)
-* [Demo Video](#demo-video)
+* [Demo](#demo)
+* [Video](#video)
 * [Report](#report)
 * [Repository Structure](#repository-structure)
 
@@ -34,7 +35,10 @@ This is an investigation conducted on Twitter social media platform about the li
   </tr>
 </table>
 
-## Demo Video
+## Demo
+https://172.26.129.178
+
+## Video
 https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
 
 ## report
