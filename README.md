@@ -18,4 +18,5 @@
 | Yonghao Hu    |1049814| 
 | Terry    |955797| 
 ## General info
-This is project is about harvest tweets from Melbourne on the MRC and undertake a variety of social media data analytics scenarios that explore liveability of Melbourne and importantly how the Twitter data can be used compared with the data available within the AURIN platform to improve our knowledge of the liveability of Melbourne.
+This is an investigation conducted on Twitter social media platform about the livability of Melbourne. The scenario that was chosen for this assignment is related to the topic of language diversity, health and income. We attempt to link these subjects with user activity on Twitter and learn about the city's true opinion.
+
