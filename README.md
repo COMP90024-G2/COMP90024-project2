@@ -11,6 +11,7 @@ COMP90024 - Cluster and Cloud Computing - 2022 S1 - Project 2
 * [Team members](#team-members)
 * [Demo Video](#demo-video)
 * [Report](#report)
+* [Repository Structure](#repository-structure)
 
 
 ## Project Description
@@ -39,4 +40,20 @@ https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
 ## report
 - [report](./docs/Report.pdf)
 
-
+## Repository Structure
+```
+| /Data_analytics
+      - data analyzer including sentiment analyser, income statistics etc.
+  /deployment 
+      - ansible scripts and some config files for deployment
+  /tweeter-harvester
+      - twitter crawler, including searcher and streamer
+  /web application
+      - web application for visualization
+  /docs 
+      - documentations
+  .gitignore 
+      - config file, ignored file list when git push
+  .README.md
+      - homepage file to display project information
+```
