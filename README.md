@@ -42,7 +42,7 @@ http://172.26.129.178
 https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
 
 ## Report
-- [Report](./report/CCC Report.pdf)
+- [Report](./report/CCC_Report.pdf)
 
 ## Repository Structure
 ```
