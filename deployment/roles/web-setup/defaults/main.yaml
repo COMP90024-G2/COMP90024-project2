@@ -11,10 +11,3 @@
 #
 ---
 docker_proxy_settings: "{\"proxies\":{\"default\":{\"httpProxy\":\"http://wwwproxy.unimelb.edu.au:8000\",\"httpsProxy\":\"http://wwwproxy.unimelb.edu.au:8000\",\"noProxy\":\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbounre.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"}}}"
-
-# Port for Backend communication
-APP_SERVER_PORT: "8000"
-# Internal port for Frontend - mapped to port 80 (HTTP)
-REACT_APP_PORT: "4000"
-# Database connection string
-COUCHDB_HOST: "http://admin:admin@172.26.134.115:5984"

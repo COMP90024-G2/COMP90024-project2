@@ -13,6 +13,7 @@
   become: yes
   ansible.builtin.git:
     repo: git@github.com:yonghao-hh/CCC-test.git
+    # git@github.com:COMP90024-G2/COMP90024-project2.git
     key_file: /home/ubuntu/.ssh/github_key
     dest: '{{ remote_project_directory }}'
     single_branch: yes
