@@ -197,7 +197,7 @@
 
     // When move mouse onto a region, show the information on the information board.
     map.on('mousemove', (e) => {
-      var zones = map.queryRenderedFeatures(e.point, {layers: ['layer emp_result']});
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['emp_result']});
 
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {
