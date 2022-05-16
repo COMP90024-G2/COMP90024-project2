@@ -151,7 +151,7 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/cassie917/cl37kb9aa000314kzbeodocvn', // style URL
+        style: 'mapbox://styles/cassie917/cl38jijmn000014nz6qogq3lj', // style URL
         center: [145.3, -37.78], // starting position [lng, lat]
         zoom: 8.6, // starting zoom
         doubleClickZoom: false,			   
@@ -193,7 +193,7 @@
 
     // When move mouse onto a region, show the information on the information board.
     map.on('mousemove', (e) => {
-      var zones = map.queryRenderedFeatures(e.point, {layers: ['health_30w']});
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['health_result']});
       
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {
