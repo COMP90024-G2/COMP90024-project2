@@ -1,0 +1,64 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: )
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+---
+# Create instances on Melbourne Research Cloud
+- name: Create instances
+  os_server:
+    name: '{{ item.name }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name }}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ item.volumes }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ instances }}'
+  register: os_instance
+
+- debug:
+    msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
+  loop: '{{ os_instance.results }}'
+  when: item.openstack is defined
+
+- name: Wait for connection
+  wait_for:
+    host: "{{ item.openstack.public_v4 }}"
+    port: 22
+    timeout: 120
+    search_regex: OpenSSH
+  loop: '{{ os_instance.results }}'
+  when: item.openstack is defined
+
+# Add master node host to group Masternode in Ansible in-memory inventory
+- name: Add master node host to to group Masternode
+  add_host:
+    name: '{{ os_instance.results[0].openstack.public_v4 }}'
+    groups: Masternode
+  when: os_instance.results[0].openstack is defined
+
+# Add Data nodes host to group Datanodes in Ansible in-memory inventory
+- name: Add Data nodes host to group Datanodes
+  add_host:
+    name: '{{ item.openstack.public_v4 }}'
+    groups: DataNodes
+  loop: '{{ os_instance.results[0:3] }}'
+  when: item.openstack is defined
+
+# Add Process Node host to group Datanodes in Ansible in-memory inventory
+- name: Add process node host to group ProcessNode
+  add_host:
+    name: '{{ os_instance.results[3].openstack.public_v4 }}'
+    groups: ProcessNode
+  when: os_instance.results[3].openstack is defined

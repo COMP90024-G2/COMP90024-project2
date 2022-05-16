@@ -1,0 +1,35 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: 1253748)
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+---
+- name: Gather facts of remote host
+  setup:
+    gather_subset: all
+
+# Install general dependencies 
+- name: Install dependencies
+  tags: always
+  become: yes
+  apt:
+    name: ['apt-transport-https', 'build-essential', 'ca-certificates', 'curl', 'git', 'python3-dev', 'python3-pip', 'python3-setuptools', 'software-properties-common', 'unzip', 'vim']
+    state: latest
+    install_recommends: no
+    update_cache: yes
+  environment: "{{ proxy_env }}"
+
+# Update Python pip
+- name: Update pip
+  tags: always
+  become: yes
+  pip:
+    name: ['pip']
+    state: latest
+  environment: "{{ proxy_env }}"

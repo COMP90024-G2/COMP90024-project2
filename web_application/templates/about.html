@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Navbar -->
+<div class="top">
+    <div class="bar theme-nav top left-align large">
+      <a class="bar-item button right hide-large hover-w large theme-btn" href="javascript:void(0)" onclick="open()"><i class="fa fa-bars"></i></a>
+      <a href="/home" class="bar-item button hide-small hover-w">Home</a>
+      <a href="/analysis" class="bar-item button hide-small hover-w">Analysis</a>
+      <a href="/youtube" class="bar-item button hide-small hover-w">Youtube</a>
+      <a href="/about" class="bar-item button theme-btn">About</a>
+    </div>
+  </div>
+    
+  <!-- Main -->
+  <div class="main">
+  
+    <div class="row padding-64">
+     
+        <h1 class="text-teal" style="text-align:center">About</h1>
+        <p class="text">This is project is about harvest tweets from Melbourne on the MRC and undertake a variety of social media data analytics scenarios that explore liveability of Melbourne and importantly how the Twitter data can be used compared with the data available within the AURIN platform to improve our knowledge of the liveability of Melbourne.</p> 
+        <p class="text"> Here is our <a href="https://github.com/COMP90024-G2/COMP90024-project2/tree/main">GitHub Repository</a>, you can find our source code and report.</p>
+        <p class="text">If you have any questions or concerns, feel free to contact our team members: </p> 
+  
+      <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Claire Zhang</td>
+                <td>wazhang1@student.unimelb.edu.au</td>
+            </tr>
+            <tr>
+                <td>Cassie Yang</td>
+                <td>yyyang4@student.unimelb.edu.au</td>
+            </tr>
+            <tr>
+              <td>Hengzhi Qiu</td>
+              <td>hengzhiq@student.unimelb.edu.au</td>
+            </tr>
+            <tr>
+              <td>Yonghao Hu</td>
+              <td>yonghaoh1@student.unimelb.edu.au</td>
+            </tr>
+            <tr>
+              <td>Terry</td>
+              <td>yifengp@student.unimelb.edu.au</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  
+    <!-- footer -->
+    <footer id="footer">
+      <div class="container theme-footer padding-32">
+        <h4><a href="/"> Home | </a><a href="/analysis">Analysis | </a><a href="/youtube">Youtube | </a><a href="/about">About </a></h4>
+      </div>
+  
+      <div class="container theme-btn">
+        <p>Powered by 2022 COMP90024 Group2</a></p>
+      </div>
+    </footer>
+  
+  <!-- END MAIN -->
+  </div>
+  
+  
+
+{% endblock %}

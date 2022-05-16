@@ -1,0 +1,14 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: 1253748)
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+
+# Use the first Data node ( the second IP in host list in memory ) as masternode
+masternode: "{{ groups['DataNodes'][0] }}"

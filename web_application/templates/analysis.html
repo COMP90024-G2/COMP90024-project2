@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block body %}
+<!-- Navbar -->
+<div class="top">
+    <div class="bar theme-nav top left-align large">
+      <a class="bar-item button right hide-large hover-w large theme-btn" href="javascript:void(0)" onclick="open()"><i class="fa fa-bars"></i></a>
+      <a href="/home" class="bar-item button hide-small hover-w">Home</a>
+      <a href="/analysis" class="bar-item button theme-btn">Analysis</a>
+      <a href="/youtube" class="bar-item button hide-small hover-w">Youtube</a>
+      <a href="/about" class="bar-item button hide-small hover-w">About</a>
+    </div>
+  </div>
+    
+  <!-- Main -->
+  <div class="main">
+  
+    <div class="row padding-64">
+        <h1 class="text-teal" style="text-align:center">Plots</h1>
+        <div>
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+         
+              img {
+                  width: 60%;
+                  height: 60%;
+                  padding-left: 100px;
+                  padding-right: 100px;
+                  margin-left: 280px;
+              }
+              .next {
+                margin-right: 70px;
+
+              }
+              .floated {
+                display: inline-block;
+                margin-left: 1070px;
+                font-size: small;
+                margin-top: 10px;
+        
+              }
+
+
+            </style>
+          </head>
+         
+          <body>
+            <span id="text"></span>
+            <div>
+                <img id="img" alt="">
+            </div>
+
+            <div class="floated">
+                <button id="pret">Previous one</button>
+                <button id="next">Next one</button>
+            </div>
+
+
+
+          </body>
+          <script>
+            let imgArr =["../static/image/1.png", "../static/image/2.png", "../static/image/3.png", "../static/image/4.png", "../static/image/5.png"]
+            let img = document.getElementById("img"); 
+            let pret = document.getElementById("pret"); 
+            let next = document.getElementById("next"); 
+            let text = document.getElementById("text"); 
+            var i = 0;
+            defaultImg(imgArr, img, i, text);
+            next.addEventListener("click", () => {
+                nextFn(imgArr, img)
+            })
+            pret.addEventListener("click", () => {
+                prextFn(imgArr, img)
+            })
+            function defaultImg(arr, img, index, text) { 
+                img.src = arr[index];
+            }
+            function prextFn(arr) { //prev pic
+                if (i == 0) {
+                    i = arr.length - 1;
+                    img.src = arr[arr.length - 1];
+                    return
+                }
+                i--;
+                img.src = imgArr[i];
+            }
+            function nextFn(arr) { 
+                if (i == arr.length - 1) {
+                    i = 0;
+                    img.src = arr[0];     
+                    return
+                }
+                i++;
+                img.src = arr[i];
+            }
+          </script>
+        </div>
+    </div>
+  
+   
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container theme-footer padding-32">
+        <h4><a href="/"> Home | </a><a href="/analysis">Analysis | </a><a href="/youtube">Youtube | </a><a href="/about">About </a></h4>
+      </div>
+  
+      <div class="container theme-btn">
+        <p>Powered by 2022 COMP90024 Group2</a></p>
+      </div>
+    </footer>
+  
+  <!-- END MAIN -->
+  </div>
+  
+  
+
+{% endblock %}

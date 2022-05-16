@@ -1,0 +1,51 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: )
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+---
+
+# Create Docker config directory
+- name: Make sure that Docker config directory exists
+  become: yes
+  file:
+    path: '~/.docker'
+    state: 'directory'
+
+# Set Docker proxy for University of Melbourne Research Cloud
+- name: Ensure Docker client proxy settings are present on the server
+  become: yes
+  copy:
+    content: "{{ docker_proxy_settings }}"
+    dest: ~/.docker/config.json
+
+# Build Docker image for web application
+- name: Build an image and push it to local repo
+  docker_image:
+    build:
+      path: '/home/ubuntu/CCC_PROJECT/web_application'
+      pull: yes
+    name: demo/web_app
+    tag: latest
+    source: build
+    # force: yes
+  become: yes
+  environment: "{{ proxy_env }}"
+
+# Stop existing Docker containers for web application and remove them (if any)
+- name: Stop web application Docker container
+  become: yes
+  docker_container:
+    name: web_app
+    state: absent
+
+# Create new docker container for web application and start container
+- name: Run a web app docker instance
+  shell: sudo docker run -d -p 80:80 --name web_app demo/web_app
+  

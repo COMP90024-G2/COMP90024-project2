@@ -1,0 +1,33 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: 1253748)
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+---
+
+# Download Aurin data tar.gz
+- name: download and unpack Aurin Data
+  shell: sudo curl -L -o aurin "https://www.dropbox.com/s/y4ss9gmw6ykde51/twitter-melb.json.tar.gz?dl=1"; sudo tar zxvf aurin; sudo rm -rf aurin
+  args:
+    chdir: '{{ remote_analytics_directory }}'
+
+# Install packages for data analytics
+- name: Install packages
+  tags: always
+  become: yes
+  pip:
+    name: ['pip', 'tweepy', 'couchdb', 'textblob', 'shapely', 'nltk']
+    state: latest
+  environment: "{{ proxy_env }}"
+
+# Perform data analysis on tweets in couchdb
+- name: run data analytics
+  shell: python3 download_corpus.py; python3 Main.py
+  args:
+    chdir: '{{ remote_analytics_directory }}'

@@ -1,0 +1,27 @@
+---
+# Copy GitHub private key to the cloud
+- name: add github ssh key
+  copy:
+    src: "keys/id_rsa"
+    dest: /home/ubuntu/.ssh/github_key
+    owner: ubuntu
+    group: ubuntu
+    mode: 0600
+
+# Clone the whole project to the cloud
+- name: Clone the project repository
+  become: yes
+  ansible.builtin.git:
+    repo: git@github.com:yonghao-hh/CCC-test.git
+    key_file: /home/ubuntu/.ssh/github_key
+    dest: '{{ remote_project_directory }}'
+    single_branch: yes
+    version: master
+  environment:
+    GIT_TERMINAL_PROMPT: 0  
+
+# Remove private key from the cloud for security
+- name: Remove GitHubKey
+  file:
+    path: /home/ubuntu/.ssh/github_key
+    state: absent

@@ -1,0 +1,56 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: 1253748)
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+---
+
+# Create Docker config directory
+- name: Make sure that Docker config directory exists
+  become: yes
+  file:
+    path: '~/.docker'
+    state: 'directory'
+
+# Set Docker proxy for University of Melbourne Research Cloud
+- name: Ensure Docker client proxy settings are present on the server
+  become: yes
+  copy:
+    content: "{{ docker_proxy_settings }}"
+    dest: ~/.docker/config.json
+
+# Build Docker image for tweet harvester
+- name: Build an image and push it to local repo
+  docker_image:
+    build:
+      path: '/home/ubuntu/CCC_PROJECT/tweeter-harvester/'
+      pull: yes
+    name: test/tweeter-harvester
+    tag: latest
+    source: build
+    # force: yes
+  become: yes
+  environment: "{{ proxy_env }}"
+
+# Stop existing Docker containers for Twitter Harvesters and remove them (if any)
+- name: Stop Tweeter Harvester Docker container
+  become: yes
+  docker_container:
+    name: tweeter-harvester
+    state: absent
+
+# Create new docker container for Twitter Harvester and start container
+- name: Create and start Twitter Harvester Docker container
+  become: yes
+  docker_container:
+    name: tweeter-harvester
+    image: test/tweeter-harvester
+    state: started
+    pull: false
+    recreate: true

@@ -1,0 +1,19 @@
+#
+# Cluster and Cloud Computing - Team 2 
+# 
+# Authors: 
+#
+#  * Yi Yang (Student ID: 1074365)
+#  * Claire Zhang (Student ID: 1080915)
+#  * Hengzhi Qiu (Student ID: 1253748)
+#  * Terry (Student ID: 955797)
+#  * Yonghao Hu (Student ID: 1049814)
+#
+
+---
+proxy_env:
+  HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000/
+  HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000/
+  http_proxy: http://wwwproxy.unimelb.edu.au:8000/
+  https_proxy: http://wwwproxy.unimelb.edu.au:8000/
+  no_proxy: localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.u nimelb.edu.au,.cloud.unimelb.edu.au
