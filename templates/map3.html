@@ -145,7 +145,7 @@
     const map = new mapboxgl.Map({
         container: 'map', // container ID
         //style: 'mapbox://styles/cassie917/cl2zo14xu000114p79nvthchc', // style URL
-        style: 'mapbox://styles/cassie917/cl36v3mb8001l14lafrasdbu9', // style URL
+        style: 'mapbox://styles/cassie917/cl38kqps2005014qvssru8pn6', // style URL
         center: [145.3, -37.78], // starting position [lng, lat]
         zoom: 8.6, // starting zoom
         doubleClickZoom: false,			   
@@ -188,7 +188,7 @@
 
     // When move mouse onto a region, show the information on the information board. 
     map.on('mousemove', (e) => {
-      const zones = map.queryRenderedFeatures(e.point, {layers: ['lang_30w']});
+      const zones = map.queryRenderedFeatures(e.point, {layers: ['lang_result']});
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {
           const sum = JSON.parse(zones[0].properties.aurin_language).lang_spoken_home_eng_only_p+JSON.parse(zones[0].properties.aurin_language).lang_spoken_home_oth_lang_p;

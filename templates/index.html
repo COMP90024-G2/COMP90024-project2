@@ -155,7 +155,7 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc2llOTE3IiwiYSI6ImNsMnB0cmM3MTFrZWozY211a2ZzZDJ6aWUifQ.8fxfLOPMGcdLEycS73cEUg';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
-        style: 'mapbox://styles/cassie917/cl36vkf73002w14qvgfvq1yt6', // style URL
+        style: 'mapbox://styles/cassie917/cl38kjwez001015o9onuo1x0b', // style URL
         center: [145.3, -37.78], // starting position [lng, lat][144.946457, -37.840935]
         zoom: 8.6, // starting zoom
         doubleClickZoom: false,			   
@@ -197,7 +197,7 @@
 
     // When move mouse onto a region, show the information on the information board.
     map.on('mousemove', (e) => {
-      var zones = map.queryRenderedFeatures(e.point, {layers: ['income_30w']});
+      var zones = map.queryRenderedFeatures(e.point, {layers: ['layer emp_result']});
 
         // Make the cities to be prior to states while selecting.
         if (zones.length > 0) {
