@@ -47,9 +47,9 @@ https://www.youtube.com/watch?v=7l91CaYvbdI&t=1s
 
 ## Repository Structure
 ```
-  /Aurin_Data
+| /Aurin_Data
       - Data from Aurin in .json format
-| /Data_analytics
+  /Data_analytics
       - data analyzer including sentiment analyser, income statistics etc.
   /deployment 
       - ansible scripts and some config files for deployment
